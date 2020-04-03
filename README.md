@@ -74,4 +74,7 @@ You can keep expanding the list more by going after individual IPs from the list
 This is the first release, I'll keep adding more features and functions to it. 
 
 **Please feel free to use it, share it and fork it!**
+
+*Report all problems/bugs through 'Issues' on this Repo. *
+
 Thanks!
