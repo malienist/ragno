@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e8b6504b-e8a8-4b91-99b5-79ba98c57d8d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ragno_ops_file.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ragno.conf" beforeDir="false" afterPath="$PROJECT_DIR$/ragno.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ragno.py" beforeDir="false" afterPath="$PROJECT_DIR$/ragno.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ragno_mod_vt.py" beforeDir="false" afterPath="$PROJECT_DIR$/ragno_mod_vt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
-    </list>
+    <list default="true" id="e8b6504b-e8a8-4b91-99b5-79ba98c57d8d" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
