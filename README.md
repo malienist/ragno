@@ -1,6 +1,7 @@
 # Ragno (Eng. Spider); Pron: Rah-nio.
 ## Ragno: IOC Multiplier
 ### Cast a wide net using a single IOC and extract IOC for the entire campaign
+![Ragno Logo](/images/1.png)
 
 Introducing Ragno: IOC Multiplier
 
