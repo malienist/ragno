@@ -6,7 +6,9 @@ Introducing Ragno: IOC Multiplier
 
 Cast a wide net using a single IOC and extract IOC for the entire campaign
 
-Ragno (Eng. Spider); Pron: Rah-nio.TL;DR: Use this Python tool to take one IOC (IP only in this first release) and expand that to all IOC related to it, download the entire list from VT and then block these to neutralise the entire campaign (or get very close to it).
+Ragno (Eng. Spider); Pron: Rah-nio.
+
+```TL;DR: Use this Python tool to take one IOC (IP only in this first release) and expand that to all IOC related to it, download the entire list from VT and then block these to neutralise the entire campaign (or get very close to it).```
 
 Ragno uses Virustotal API to interact with the popular OSINT platform. 
 
