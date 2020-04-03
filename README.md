@@ -15,8 +15,6 @@ The idea behind Ragno is to rapidly respond to an active Malware campaign by ext
 
 Please note that this tool relies on OSINT available from VT and cannot to relied on for a complete list of IOC for every single malware campaign but should be used as a rapid response tool to get as many IOC within a matter of a few seconds as possible. 
 
-Get it here: https://github.com/vithakur/ragno
-
 *You'll need Python 3 to run Ragno. *
 
 ## Configuring Ragno
@@ -30,23 +28,50 @@ After you have downloaded the code from GitHub, simply run the main file:
 ## Usage
 Again, Ragno is a very easy and simple tool when it comes to usage. Simply enter the IP you have (from dynamic analysis, PCAP, sandboxing or even from VT) and follow instructions. I have configured Ragno to cast 10 webs for each search. Each web has a potential of returning results from anywhere between 1 to 100. So you can see how quickly the list can expand once you start casting the webs. 
 
-![Image](/images/3.png)
+![Image](/images/4.png)
 
 We'll use an example I took from a recent malware campaign:
+
+![Image](/images/5.png)
+
 Hit Enter and then select an option:
-Communication Files: 
+
+![Image](/images/6.png)
+
+## Communication Files: 
 Files that communicate with the IP address. We will expand this section to 10 levels and then extract all the network infrastructure information we can use to build out our campaign IOC list. Please note that you will not always get all 10 levels, it really depends on how much OSINT is available on your search. 
+
+![Image](/images/7.png)
+
 As you can see from the screenshot above, some of our webs have returned with results and we can now start building our list. This happens in the next step.
+
+![Image](/images/8.png)
+
 Ragno creates a text file with all the IOC extracted and reformats it an easy-to-read manner. 'IOC-list-communicating.txt' will have all the IOC and the list is ready to use now. 
+
 You can also print the entire list to screen by selecting option 1 from the presented menu:
+
+![Image](/images/9.png)
+
 As you can see above, we have been able to extract a long list of IPs associated to our initial search. In this example, the entire network-list is more than 200 IPs, which are all verified as 'malicious' on VT and can be blocked based on this OSINT report. 
+
 The entire operation tool less than a minute :)
-Downloaded Files: 
+## Downloaded Files: 
 Files downloaded from the IP address. Again, we will try to expand it to 10 levels and get all the file names that have been associated to this IOC. This will help us build out our malicious file name database which can be used to block files on the endpoints or for detection purposes. Again, don't expect all 10 webs to come back with results in all searches. 
+
 Let's take a look at the same IP from the above example for this purpose:
+
+![Image](/images/10.png)
+
 Now let's take a look at the re-formated version:
+
+![Image](/images/11.png)
+
+
 There you have it. The entire list of IPs for the campaign and a comprehensive list of malware and other file names that have been associated with this IP. 
+
 You can keep expanding the list more by going after individual IPs from the list and further expanding them but at some point you'll notice duplication of IOC in you list as infrastructure resources are limited for the actors running the campaign. 
 This is the first release, I'll keep adding more features and functions to it. 
-Please feel free to use it, share it and fork it!
+
+**Please feel free to use it, share it and fork it!**
 Thanks!
