@@ -45,6 +45,6 @@ class ValidateAPI:
             print('\n   API Key is Valid!\n')
         else:
             print("VT API Key is not valid, please fix this issue and retry.\n")
-            print('Thanks for using SQT. Exiting...')
+            print('Thanks for using Ragno. Exiting...')
             time.sleep(1)
             exit()
