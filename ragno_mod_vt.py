@@ -48,7 +48,7 @@ class ExecuteVT:
                 except KeyError as e:
                     print ("ERROR: Malformed JSON response from VT")
 
-                with open('IOC-list-communicating.txt', 'w+') as file:
+                with open('IOC-list-communicating.txt', 'a+') as file:
                     file.write("\n".join(related_hosts) )
 
 
@@ -103,7 +103,7 @@ class ExecuteVT:
                 except KeyError as e:
                     print ("ERROR: Malformed JSON response from VT")
 
-                with open('IOC-list-downloaded.txt', 'w+') as file:
+                with open('IOC-list-downloaded.txt', 'a+') as file:
                     file.write("\n".join(related_filenames) )
 
             # Fix the output file - re-format for easy-reading
