@@ -15,7 +15,19 @@ The idea behind Ragno is to rapidly respond to an active Malware campaign by ext
 
 Please note that this tool relies on OSINT available from VT and cannot to relied on for a complete list of IOC for every single malware campaign but should be used as a rapid response tool to get as many IOC within a matter of a few seconds as possible. 
 
-*You'll need Python 3 to run Ragno. *
+## Get Dependencies
+
+Install python3 for your platform
+
+(optional) Create a virtual environment
+> virtualenv -p python3 env
+
+> source env/bin/activate
+
+Install python dependencies in your virtualenv
+> pip install -r requirements.txt
+
+
 
 ## Configuring Ragno
 This is a very simple step. Just open 'ragno.conf' and enter your VT API key. 
