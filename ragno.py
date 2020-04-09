@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 
+__author__ = "Vishal Thakur"
+__copyright__ = "Copyright 2020, Vishal Thakur"
+__license__ = "Apache2"
+__version__ = "1.0"
+__email__ = "vishal@mailfence.com"
+__status__ = "Prod"
+
 import argparse
 import configparser
 
