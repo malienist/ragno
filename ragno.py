@@ -51,5 +51,5 @@ if __name__ == '__main__':
                 json.dump(full_results, fp)
                 print ("Wrote results to: {}".format(args.outfile))
         except IOError:
-            print ("ERROR: Could not write input file {}:".format(outfile))
+            print ("ERROR: Could not write output file {}:".format(outfile))
             sys.exit(1)
