@@ -22,7 +22,8 @@ def vt_iplookup( ip_address, api_key_vt):
         error_type, _ = e.args
 
         if error_type == 'ClientError':
-            print ("WARN: Item does not appear to be an IP address: {}".format(ip_address))
+            print ("ERROR: Item does not appear to be an IP address: {}".format(ip_address))
+            sys.exit(1)
         elif error_type == 'WrongCredentialsError':
             print ("ERROR: Provided VT apikey is invalid: {}".format(api_key_vt))
             sys.exit(1)
@@ -54,7 +55,8 @@ def vt_iplookup( ip_address, api_key_vt):
         error_type, _ = e.args
 
         if error_type == 'ClientError':
-            print ("WARN: Item does not appear to be an IP address: {}".format(ip_address))
+            print ("ERROR: Item does not appear to be an IP address: {}".format(ip_address))
+            sys.exit(1)
         elif error_type == 'WrongCredentialsError':
             print ("ERROR: Provided VT apikey is invalid: {}".format(api_key_vt))
             sys.exit(1)
