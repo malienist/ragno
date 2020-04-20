@@ -7,164 +7,50 @@ __version__ = "1.0"
 __email__ = "vishal@mailfence.com"
 __status__ = "Prod"
 
-import requests
-import json
-import time
+import vt
+
 class ExecuteVT:
     from config_reader import apiKeyVT
     global apiKeyVT
     def ioc_ip_single():
         ipAddress=input('Please provide IP for lookup: \n\n')
-        relationship = input('Please select one option: \n\n'
+        choice = input('Please select one option: \n\n'
                              ' Press 1 for Communicating Files: \n'
                              ' Press 2 for Downloaded Files: \n')
 
-        if relationship == '1':
+        if choice is '1':
+            print("Ragno is now casting webs, please wait for results...")
             # Create the ioc-list file
             from ragno_ops_file import ExecuteFileOpsComm
             ExecuteFileOpsComm.createList()
 
-            relationship='communicating_files'
-            url = "https://www.virustotal.com/api/v3/ip_addresses/" + ipAddress + '/' + relationship
-            headers = {'x-apikey': apiKeyVT}
-            params = {"limit": "10"}
-            response = requests.get(url, headers=headers, params=params)
-            json_response = response.json()
-
-            # Start launching the webs
-            print("Ragno is now casting 10 webs...\n")
-            print("...wait for results.\n")
-            time.sleep(1)
-
-            print('Casting Web 1...\n')
+            # Get all malware binaries that were observed communicating with this IP
+            response = {}
             try:
-                if 'network_infrastructure' in json_response['data'][0]['attributes']:
-                    web = json_response['data'][0]['attributes']['network_infrastructure']
-                    print('Web 1 results: \n')
-                    print(json_response['data'][0]['attributes']['network_infrastructure'])
-                    with open('IOC-list-communicating.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
+                with vt.Client(apiKeyVT) as client:
+                    response = client.get_json('/ip_addresses/{}/communicating_files', ipAddress)
 
-            print('Casting Web 2...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][1]['attributes']:
-                    web = json_response['data'][1]['attributes']['network_infrastructure']
-                    print('Web 2 results: \n')
-                    print(json_response['data'][1]['attributes']['network_infrastructure'])
-                    with open('IOC-list-communicating.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
+            except vt.APIError as e:
+                print ("ERROR: Problem contacting VT API: {}".format(e))
 
-            print('Casting Web 3...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][2]['attributes']:
-                    web = json_response['data'][2]['attributes']['network_infrastructure']
-                    print('Web 3 results: \n')
-                    print(json_response['data'][2]['attributes']['network_infrastructure'])
-                    with open('IOC-list-communicating.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
+            # Iterate other hosts that those binaries communicated with
+            # note that each binary may be associated with 0..n hosts
 
-            print('Casting Web 4...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][3]['attributes']:
-                    web = json_response['data'][3]['attributes']['network_infrastructure']
-                    print('Web 4 results: \n')
-                    print(json_response['data'][3]['attributes']['network_infrastructure'])
-                    with open('IOC-list-communicating.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
+            if response:
+                related_hosts = set()
+                try:
+                    for item in response['data']:
+                        # add and dedupe the set of related hosts
+                        host_list = item['attributes'].get('network_infrastructure')
+                        if host_list:
+                            related_hosts.update( host_list )
 
-            print('Casting Web 5...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][4]['attributes']:
-                    web = json_response['data'][4]['attributes']['network_infrastructure']
-                    print('Web 5 results: \n')
-                    print(json_response['data'][4]['attributes']['network_infrastructure'])
-                    with open('IOC-list-communicating.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
+                except KeyError as e:
+                    print ("ERROR: Malformed JSON response from VT")
 
-            print('Casting Web 6...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][5]['attributes']:
-                    web = json_response['data'][5]['attributes']['network_infrastructure']
-                    print('Web 6 results: \n')
-                    print(json_response['data'][5]['attributes']['network_infrastructure'])
-                    with open('IOC-list-communicating.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
+                with open('IOC-list-communicating.txt', 'a+') as file:
+                    file.write("\n".join(related_hosts) )
 
-            print('Casting Web 7...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][6]['attributes']:
-                    web = json_response['data'][6]['attributes']['network_infrastructure']
-                    print('Web 7 results: \n')
-                    print(json_response['data'][6]['attributes']['network_infrastructure'])
-                    with open('IOC-list-communicating.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
-
-            print('Casting Web 8...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][7]['attributes']:
-                    web = json_response['data'][7]['attributes']['network_infrastructure']
-                    print('Web 8 results: \n')
-                    print(json_response['data'][7]['attributes']['network_infrastructure'])
-                    with open('IOC-list-communicating.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
-
-            print('Casting Web 9...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][8]['attributes']:
-                    web = json_response['data'][8]['attributes']['network_infrastructure']
-                    print('Web 9 results: \n')
-                    print(json_response['data'][8]['attributes']['network_infrastructure'])
-                    with open('IOC-list-communicating.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
-
-            print('Casting Web 10...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][9]['attributes']:
-                    web = json_response['data'][9]['attributes']['network_infrastructure']
-                    print('Web 10 results: \n')
-                    print(json_response['data'][9]['attributes']['network_infrastructure'])
-                    with open('IOC-list-communicating.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
 
             # Fix the output file - re-format for easy-reading
             from ragno_ops_file import ExecuteFileOpsComm
@@ -186,152 +72,39 @@ class ExecuteVT:
                 print('Invalid selection, exiting...')
                 exit()
             return
-        elif relationship =='2':
-            relationship='downloaded_files'
-            url = "https://www.virustotal.com/api/v3/ip_addresses/" + ipAddress + '/' + relationship
 
-            headers = {'x-apikey': apiKeyVT}
-            params = {"limit": "10"}
-            response = requests.get(url, headers=headers, params=params)
-            json_response = response.json()
-
+        elif choice is '2':
             # Create the ioc-list file
             from ragno_ops_file import ExecuteFileOpsDownld
             ExecuteFileOpsDownld.createList()
-            # Start the function
-            print("Ragno is now casting 10 webs...\n")
-            print("...wait for results.\n")
-            time.sleep(1)
 
-            print('Casting Web 1...\n')
-            try:
-                if 'names' in json_response['data'][0]['attributes']:
-                    web = json_response['data'][0]['attributes']['names']
-                    print('Web 1 results: \n')
-                    print(json_response['data'][0]['attributes']['names'])
-                    with open('IOC-list-downloaded.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
+            print("Ragno is now casting webs, please wait for results...")
 
-            print('Casting Web 2...\n')
+            # iterate over each malware binary that was observed downloaded from this IP
+            response = {}
             try:
-                if 'network_infrastructure' in json_response['data'][1]['attributes']:
-                    web = json_response['data'][1]['attributes']['network_infrastructure']
-                    print('Web 2 results: \n')
-                    print(json_response['data'][1]['attributes']['network_infrastructure'])
-                    with open('IOC-list-downloaded.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
+                with vt.Client(apiKeyVT) as client:
+                    response = client.get_json('/ip_addresses/{}/downloaded_files', ipAddress)
 
-            print('Casting Web 3...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][2]['attributes']:
-                    web = json_response['data'][2]['attributes']['network_infrastructure']
-                    print('Web 3 results: \n')
-                    print(json_response['data'][2]['attributes']['network_infrastructure'])
-                    with open('IOC-list-downloaded.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
+            except vt.APIError as e:
+                print ("ERROR: Problem contacting VT API: {}".format(e))
 
-            print('Casting Web 4...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][3]['attributes']:
-                    web = json_response['data'][3]['attributes']['network_infrastructure']
-                    print('Web 4 results: \n')
-                    print(json_response['data'][3]['attributes']['network_infrastructure'])
-                    with open('IOC-list-downloaded.txt', 'a+') as file:
-                        json.dump(web_2, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
 
-            print('Casting Web 5...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][4]['attributes']:
-                    web = json_response['data'][4]['attributes']['network_infrastructure']
-                    print('Web 5 results: \n')
-                    print(json_response['data'][4]['attributes']['network_infrastructure'])
-                    with open('IOC-list-downloaded.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
+            # dedupe the set of malware binary filenames
+            if response:
+                related_filenames = set()
+                try:
+                    for item in response['data']:
 
-            print('Casting Web 6...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][5]['attributes']:
-                    web = json_response['data'][5]['attributes']['network_infrastructure']
-                    print('Web 6 results: \n')
-                    print(json_response['data'][5]['attributes']['network_infrastructure'])
-                    with open('IOC-list-downloaded.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
+                        filename_list = item['attributes'].get('names')
+                        if filename_list:
+                            related_filenames.update( filename_list )
 
-            print('Casting Web 7...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][6]['attributes']:
-                    web = json_response['data'][6]['attributes']['network_infrastructure']
-                    print('Web 7 results: \n')
-                    print(json_response['data'][6]['attributes']['network_infrastructure'])
-                    with open('IOC-list-downloaded.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
+                except KeyError as e:
+                    print ("ERROR: Malformed JSON response from VT")
 
-            print('Casting Web 8...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][7]['attributes']:
-                    web = json_response['data'][7]['attributes']['network_infrastructure']
-                    print('Web 8 results: \n')
-                    print(json_response['data'][7]['attributes']['network_infrastructure'])
-                    with open('IOC-list-downloaded.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
-
-            print('Casting Web 9...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][8]['attributes']:
-                    web = json_response['data'][8]['attributes']['network_infrastructure']
-                    print('Web 9 results: \n')
-                    print(json_response['data'][8]['attributes']['network_infrastructure'])
-                    with open('IOC-list-downloaded.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
-
-            print('Casting Web 10...\n')
-            try:
-                if 'network_infrastructure' in json_response['data'][9]['attributes']:
-                    web = json_response['data'][9]['attributes']['network_infrastructure']
-                    print('Web 7 results: \n')
-                    print(json_response['data'][9]['attributes']['network_infrastructure'])
-                    with open('IOC-list-downloaded.txt', 'a+') as file:
-                        json.dump(web, file)
-                else:
-                    print('Web did not find any Network-specific IOC.\n')
-            except IndexError:
-                print("Web didn't return any results. \n")
+                with open('IOC-list-downloaded.txt', 'a+') as file:
+                    file.write("\n".join(related_filenames) )
 
             # Fix the output file - re-format for easy-reading
             from ragno_ops_file import ExecuteFileOpsDownld
@@ -356,9 +129,3 @@ class ExecuteVT:
             from ragno import Main
             Main.main_menu()
             return
-
-
-
-
-
-
